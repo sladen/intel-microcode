@@ -1,0 +1,52 @@
+1995-09-05, 611, b0026   # Pentium Pro 150MHz,  B0
+1995-10-20, 612, c0004   # Pentium Pro 150MHz,  C0
+1995-10-20, 616, a0001   # Pentium Pro 200MHz, sA0
+
+1995-11                  # Release of Pentium Pro
+
+1996-01-05, 612, 000c5   # Pentium Pro 150MHz,  C0 # confirmed in Award BIOS source R00, "10/07/96"
+1996-01-25, 616, 000c5   # Pentium Pro 200MHz, sA0
+1996-01-25, 617, 000c5   # Pentium Pro 200MHz, sA1
+
+1996-07-18, 619, 000d1   # Pentium Pro 200MHz, sB1
+1996-08-27, 630, 00013   # Pentium-II/Klamath,  A0 # confirmed in Award BIOS source R01, "02/03/97"; Tekram BIOS V1.03 1998-01-23
+1996-09-03, 632, 00020   # Pentium-II/Klamath,  B0
+
+1996-12-10, 612, 000c6   # Pentium Pro 150MHz,  C0 #  99-B_c6_612.inc / B_c6_612.inc
+1996-12-10, 617, 000c6   # Pentium Pro 200MHz, sA1 #  43-B_c6_617.inc / B_c6_616.inc
+1996-12-10, 616, 000c6   # Pentium Pro 200MHz, sA0 #  51-B_c6_616.inc
+1996-12-12, 633, 00032   # Pentium-II/Klamath,  C0
+1996-12-18, 611, 00b27   # Pentium Pro 150MHz,  B0 #  bu27_fb.inc
+
+1997-05                  # Release of Pentium II
+
+1997-06-16, 634, 00033   # Pentium-II/Klamath,  C1
+1997-06-16, 634, 00033, 0# 
+
+1997-12-12, 650, 00019,  #                         #  94-MU265019.inc
+
+1998-02-11, 650, 0002e,20#                         # 146-MU16502e.inc
+1998-02-11, 650, 0002f,80#                         # 147-MU16502f.inc
+1998-02-18, 619, 000d2   # Pentium Pro 200MHz, sB1 # 153-d2_619.inc
+
+1998-05-08, 633, 00033, 1# Klamath / PentiumII/2.8V
+1998-05-08, 633, 00034, 0
+1998-05-08, 633, 00034, 1
+1998-05-08, 634, 00035, 0
+1998-05-08, 634, 00035, 1
+
+1998-06-10,1632, 00002, ?#Pentium-II Overdrive,TdB0 # 240-MU163202.inc
+
+1998-09-23, 633, 00036, 0
+1998-09-23, 634, 00037, 0
+
+1999-02                  # Release of Pentium III/Katmai 
+
+1999-05-25, 650, 00040, 1# 429-MU165040.inc
+1999-05-25, 650, 00041, 2# 430-MU165041.inc
+
+
+
+
+http://read.pudn.com/downloads49/sourcecode/others/168522/2M_Award%20Bios%206.00Pg%20Source%20Code%201999/P6UPD.INC__.htm
+
