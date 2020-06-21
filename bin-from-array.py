@@ -9,11 +9,11 @@ def main():
         #print `fields`
         offset, empty, hop1, hop2, hop3, nulls = fields
         op1 = hop1.decode("hex")
-        op2 = hop1.decode("hex")
-        op3 = hop1.decode("hex")
-        raw += op1
-        raw += op2
-        raw += op3
+        op2 = hop2.decode("hex")
+        op3 = hop3.decode("hex")[:-2]
+        raw += '\0\0' + op1
+        raw += '\0\0' + op2
+        raw += op3[0:0]
         found += 1
         if found == 1:
             print 'length:', len(raw), 'bytes;', len(8*raw), 'bits'
