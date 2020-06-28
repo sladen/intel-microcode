@@ -33,6 +33,42 @@ def main(instruction = None):
         xchg_ecx_eax = 0x910000
         instruction = xchg_ecx_eax
 
+    and_thresholds = [0] * 104
+    and_buckets = [0] * 104
+
+    # how many bits are required (AND) in column?
+    for l in binary_lines:
+        for j, mask in zip(xrange(104), bitmask(bits=104)):
+            if l & mask:
+                and_thresholds[j] += 1
+
+    #print `and_thresholds`
+        
+    # how many bits were activated (AND) in each column?
+    
+    for i, mask in zip(xrange(0,24*2,2), bitmask(bits=24)):
+        match = bool(instruction & mask)
+        #print i, hex(mask), match
+        line1 = binary_lines[i+0]
+        line2 = binary_lines[i+1]
+        for output, bit in zip(xrange(104), bitmask(bits=104)):
+            if bool(line1 & bit) and match:
+                and_buckets[output] += 1
+            if bool(line2 & bit) and not match:
+                and_buckets[output] += 1
+
+    result = 0
+    for i, mask in zip(xrange(104), bitmask(bits=104)):
+        if and_buckets[i] >= (and_thresholds[i]-4):
+            result |= mask
+
+    print and_buckets
+
+    #print `and_buckets`
+    print "{0:#0{1}x}".format(instruction, 6+2), 'x86_instruction', '=>',
+    print "{0:#0{1}x}".format(result, 28), '(N)AND output'
+    return
+
     # each bit doubled up (if true, if false) => 48 bits
     not_x86 = n(instruction,24)
     x86 = instruction
@@ -62,13 +98,17 @@ def main(instruction = None):
     valid = bool(intermediate & 0x1)
     prefix = bool(intermediate & 0x2)
     print "{0:#0{1}x}".format(instruction, 6+2), 'x86_instruction', '=>',
-    print "{0:#0{1}x}".format(intermediate, 28), '(N)AND output',
+    print "{0:#0{1}x}".format(intermediate, 28), 'AND output',
     if valid: print '<== valid?',
     if prefix: print '<== prefix?',
     print
 
+if __name__!='__main__':
+    main(0xcccccc)
+
 if __name__=='__main__':
     for x86 in (0xcc0000, 0xcccc00, 0xcccccc, # Debug interupt
+                0x330000, 0x333300, 0x333333, # Debug interupt
                 0x0f0b00, 0x0fff00, 0x0fffff, 0x66f0b0, 0x67f0b0, #Undefined Op-codes
                 0x909090, 0x669000, 0x0f1f00, 0x0f1f40, 0x660f1f, 0x0f1f80, 0x0f1f84, 0x660f1f, 0x666690, # Nops
                 0x900000, 0x909000, 0x909090, # Repeated Nops, should be the same
