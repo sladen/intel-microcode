@@ -63,12 +63,25 @@ def main():
     # first couple of rows are header, last is empty
     content = rows[2:-1]
     assert len(content) == 48
+    assert len(content[0]) == 102
 
     # ensure we get a final newline too
-    s = '\n'.join(content + [])
+    s = '\n'.join(content + [''])
 
     # save it somewhere
     file('dixon-pla-small-and-only.txt','w').write(s)
+
+
+    # for convenience, save it in the other orientation too
+    flipped = [''.join(a) for a in zip(*reversed(content))]
+    assert len(flipped) == 102
+    assert len(flipped[0]) == 48
+
+    # ensure we get a final newline too
+    t = '\n'.join(flipped + [''])
+
+    # save it somewhere
+    file('dixon-pla-small-and-flipped.txt', 'w').write(t)
 
 
 if __name__=="__main__":
