@@ -1,0 +1,125 @@
+https://www.fermimn.edu.it/inform/materiali/evarchi/intel/p6/optimgd.pdf (v2.2 1995-04)
+http://datasheets.chipdb.org/Intel/x86/P6/optimgd.pdf
+https://wasm.in/threads/kolichestvo-taktov-na-komandu.1410/page-2
+https://kib.kiev.ua/x86docs/Intel/Intel-OptimGuide/242816-001.pdf (AP-526, 1995-10)
+http://phg.chat.ru/opcode.txt "PENTIUM PRO/PENTIUM II RISC-CORE INSTRUCTIONS INFO & TIMES"
+https://patents.google.com/patent/US6934828 fp_store_address fp_store_data
+
+Confirms 24-bit input/mask
++ 0x0f prefix within the 24-bits
++ a few extra signals for other prefixes/states
+
+uop names inconsistently striped, and various other artifacts of a hand
+hacking the formatting of what was previously an 80-column fixed pitch output
+printed report!
+
+eg. "fp_compare.Port_(not found).latency_1(ST0, ST(i))"
+
+Targets
+=========
+ArithFLAGS
+AL
+AH
+AX
+CL
+EAX
+EDX
+ECX
+EBP
+ESP
+FSW
+ST0
+ST7
+SystemFlags
+
+Macros
+==========
+CF_DATA
+CONST
+CONST_0
+IMM
+MEM
+REG_OP_Size
+REG_ddd
+REG_sss  (3-bits rm32 or r32)
+SEG+DISP
+ST(i)
+TMP0
+TMP1
+TMP2 -- can be 64-bit ?
+TMP3
+TMP5 (flags?)
+base_BBB
+next_virt_ip
+sink
+virt_ip
+
+
+Immediate constants
+===================
+000010000
+000001010
+000000000
+
+
+But many of the uop names are visible:
+
+add.Port_01
+div.Port_01
+int_div.Port_0
+int_mul.Port_0
+load.Port_2
+load_ea.Port_0
+m_call.Port_1
+merge.Port_0
+move.Port_01 
+mul.Port_0
+shl_double.Port_0
+shr_double.Port_0
+store_address.Port_3
+store_data.Port_4
+sub.Port_01
+
+fp_compare.Port_(not found)
+fp_convert.Port_0
+fp_exchange.Port_(none*) -- (nop)
+fp_move.Port_0
+fp_normalize.Port_0
+fp_select.Port_0
+fp_sqrt.Port_0
+fp_store_address.Port_3
+fp_store_data.Port_4
+fp_xor.Port_0
+fp_xor_sign.Port_0
+freadrom.Port_(not found)
+
+
+
+based on CBW and MOVZX, 'move' and 'load' seems to have implicit sign extension ability
+
+
+Less mangled example
+=====================
+
+"ADC r8,rm8":                ( 00.010.01.0 11.ddd.sss )
+"ADC r16/32,rm16/32":        ( 00.010.01.1 11.ddd.sss )
+"SBB r8,rm8":                ( 00.011.01.0 11.ddd.sss )
+"SBB r16/32,rm16/32":        ( 00.011.01.1 11.ddd.sss )
+------------------------------------------------------------
+TMP0 := port1.latency_1(ArithFLAGS, REG_ddd);
+reg_ddd := port01.latency_1(CF_data, REG_sss);
+
+
+More mangled example
+===================
+
+HDR: "ADC r8,rm8":         ( 00.010.01.0 11.ddd.sss -------- )
+HDR: "ADC r16/32,rm16/32": ( 00.010.01.1 11.ddd.sss -------- )
+HDR: "SBB r8,rm8":         ( 00.011.01.0 11.ddd.sss -------- )
+HDR: "SBB r16/32,rm16/32": ( 00.011.01.1 11.ddd.sss -------- )
+
+1  FLOW:  TMP0 =      Port_01.latency_1(ArithFLAGS, REG_ddd)
+2  FLOW:  REG_ddd =   port_01.latency_1(TMP0, REG_sss)
+
+
+
